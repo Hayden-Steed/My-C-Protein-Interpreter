@@ -5,9 +5,6 @@
 #include "proteinAnalysis.h"
 
 
-// example use
-// exe -f Data/ecoli.faa -o output.csv -im
-
 
 #define ARGS_INIT {.FN_ARG = "-f", \
     .OP_ARG = "-o", \
@@ -158,6 +155,23 @@ int main (int argc, char** argv) {
         printf("ERROR (main): file could not be created '%s'\n", file_path);
     }
 
+    fprintf(o_fptr, "Ref Seq");
+    fprintf(o_fptr, ", AA seq");
+
+    // output any additional data requested
+    if (args.mw_analysis) {
+        fprintf(o_fptr, ", mw (g/mol)");
+    }
+    if (args.net_charge_analysis) {
+        fprintf(o_fptr, ", (charge)");
+    }
+
+    if (args.intermembrane_analysis) {
+        fprintf(o_fptr, ", integral/non integral");
+    }
+    fprintf(o_fptr, "\n");
+
+
     for (int protein_index = 0; protein_index < fasta.p_count; protein_index++) {
         ProteinEntry pe = fasta.entrys[protein_index];
 
@@ -169,11 +183,11 @@ int main (int argc, char** argv) {
         // output any additional data requested
         if (args.mw_analysis) {
             float mw = mws[protein_index];
-            fprintf(o_fptr, ", %f (g/mol)", mw);
+            fprintf(o_fptr, ", %f", mw);
         }
          if (args.net_charge_analysis) {
             float net_charge = net_charges[protein_index];
-            fprintf(o_fptr, ", %f (charge)", net_charge);
+            fprintf(o_fptr, ", %f", net_charge);
         }
 
         if (args.intermembrane_analysis) {
