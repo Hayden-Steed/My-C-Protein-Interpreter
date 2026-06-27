@@ -9,7 +9,7 @@ A simple (unsafe) program that reads a .faa file and creates a .csv with each pr
 
  * the input file must be have this layout
 
-> > [Identifier][SPACE].....
+> (>)[Identifier][SPACE].....
 > [AA Sequence]
 
 ## How to build
